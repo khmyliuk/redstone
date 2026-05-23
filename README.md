@@ -1,1 +1,1 @@
-![alt text](/cache/redstone.png)
+![alt text](/media/redstone.png)
