@@ -1,7 +1,7 @@
 # 0001. Record architecture decisions
 
 **Status:** Accepted
-**Date:** 2026-05-23
+**Date:**   2026-05-23
 
 ## Context
 We need a way to document the project's architectural decisions so that I can still understand the context in 6+ months.
@@ -22,7 +22,7 @@ Statuses:
 - Deprecated
 - Superseded by ADR-NNNN
 
-## Consequences
+## What changes
 - Every significant architectural decision requires an ADR.
 - PRs introducing architectural changes without an ADR are
   considered incomplete.
