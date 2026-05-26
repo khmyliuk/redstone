@@ -1,1 +1,4 @@
 .envrc
+
+secrets/*.yaml
+!secrets/*.enc.yaml

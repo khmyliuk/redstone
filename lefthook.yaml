@@ -1,0 +1,15 @@
+pre-commit:
+  parallel: true
+  commands:
+    sops-encrypted-check:
+      glob: "{secrets/**/*,*.enc.*}"
+      run: |
+        fail=0
+        for f in {staged_files}; do
+          [ -f "$f" ] || continue
+          if ! grep -q '^sops:' "$f" && ! grep -q '"sops"[[:space:]]*:' "$f"; then
+            echo "✗ $f committed in plaintext"
+            fail=1
+          fi
+        done
+        exit $fail
