@@ -2,3 +2,6 @@
 
 secrets/*.yaml
 !secrets/*.enc.yaml
+
+terraform.tfstate 
+terraform.tfstate.backup
