@@ -23,4 +23,12 @@ resource "hcloud_firewall" "my-firewall" {
     description = "BlueMap"
   }
 
+  rule {
+   direction   = "in"
+    protocol    = "tcp"
+    port        = "22"
+    source_ips  = var.allowed_ssh_cidrs
+    description = "SSH"
+  }
+
 }
