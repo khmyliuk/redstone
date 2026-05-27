@@ -1,0 +1,28 @@
+#cloud-config
+hostname: ${hostname}
+timezone: Europe/Chisinau
+
+users:
+  - name: ${admin_user}
+    groups: [sudo]
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ${ssh_pubkey}
+
+write_files:
+  - path: /etc/ssh/sshd_config.d/99-hardening.conf
+    content: |
+      PermitRootLogin no
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+
+package_update: true
+package_upgrade: true
+packages:
+  - curl
+  - fail2ban
+  - unattended-upgrades
+
+runcmd:
+  - systemctl reload ssh

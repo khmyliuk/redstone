@@ -3,6 +3,11 @@ variable "secrets_file" {
   default = "../../secrets/infra.enc.yaml"
 }
 
+variable "admin_user" {
+  type    = string
+  default = "junkie"
+}
+
 variable "allowed_ssh_cidrs" {
   type    = list(string)
   default = ["0.0.0.0/0", "::/0"]
