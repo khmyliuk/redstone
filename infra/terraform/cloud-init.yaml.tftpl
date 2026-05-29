@@ -21,8 +21,18 @@ package_update: true
 package_upgrade: true
 packages:
   - curl
+  - git
   - fail2ban
   - unattended-upgrades
+
+ansible:
+  install_method: distro
+  package_name: ansible-core
+  pull:
+    url: "${ansible_repo_url}"
+    checkout: "${ansible_ref}"
+    playbook_name: "${ansible_playbook_path}"
+    full: true
 
 runcmd:
   - systemctl reload ssh

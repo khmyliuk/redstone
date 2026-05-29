@@ -35,6 +35,22 @@ variable "image" {
   default = "ubuntu-26.04"
 }
 
+variable "ansible_repo_url" {
+  type    = string
+  default = "https://github.com/khmyliuk/redstone.git"
+}
+
+variable "ansible_playbook_path" {
+  type    = string
+  default = "ansible/site.yml"
+}
+
+variable "ansible_ref" {
+  type        = string
+  default     = "v0.1.0"
+  description = "Pinned git ref (tag or SHA) for ansible-pull checkout."
+}
+
 variable "mc_port" {
   type    = number
   default = 25565
