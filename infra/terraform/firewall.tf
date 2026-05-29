@@ -23,6 +23,14 @@ resource "hcloud_firewall" "my-firewall" {
     description = "BlueMap"
   }
 
+    rule {
+    direction  = "in"
+    protocol   = "udp"
+    port       = "25567"
+    source_ips = ["0.0.0.0/0", "::/0"]
+    description = "VoiceChat"
+  }
+
   rule {
    direction   = "in"
     protocol    = "tcp"

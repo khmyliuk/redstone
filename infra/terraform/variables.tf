@@ -60,3 +60,8 @@ variable "bluemap_port" {
   type    = number
   default = 25566
 }
+
+variable "vc_port" {
+  type    = number
+  default = 25567
+}
