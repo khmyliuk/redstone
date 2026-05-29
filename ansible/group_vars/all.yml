@@ -6,3 +6,5 @@ minecraft_xmx: "3G"
 minecraft_xms: "3G"
 minecraft_eula: true
 minecraft_port: 25565
+minecraft_max_players: 333
+minecraft_online_mode: false 
