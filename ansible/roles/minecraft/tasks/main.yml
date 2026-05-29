@@ -1,0 +1,79 @@
+---
+- name: Create minecraft system user
+  ansible.builtin.user:
+    name: "{{ minecraft_user }}"
+    system: true
+    home: "{{ minecraft_dir }}"
+    shell: /usr/sbin/nologin
+    create_home: true
+
+- name: Ensure server directory
+  ansible.builtin.file:
+    path: "{{ minecraft_dir }}"
+    state: directory
+    owner: "{{ minecraft_user }}"
+    group: "{{ minecraft_user }}"
+    mode: "0750"
+
+- name: Check if this NeoForge version is already installed
+  ansible.builtin.stat:
+    path: "{{ minecraft_dir }}/libraries/net/neoforged/neoforge/{{ neoforge_version }}/unix_args.txt"
+  register: nf_installed
+
+- name: Download NeoForge installer
+  ansible.builtin.get_url:
+    url: "{{ neoforge_installer_url }}"
+    dest: "{{ minecraft_dir }}/neoforge-{{ neoforge_version }}-installer.jar"
+    owner: "{{ minecraft_user }}"
+    group: "{{ minecraft_user }}"
+    mode: "0640"
+  when: not nf_installed.stat.exists
+
+- name: Run NeoForge server installer
+  ansible.builtin.command:
+    cmd: "java -jar neoforge-{{ neoforge_version }}-installer.jar --installServer"
+    chdir: "{{ minecraft_dir }}"
+    creates: "{{ minecraft_dir }}/libraries/net/neoforged/neoforge/{{ neoforge_version }}/unix_args.txt"
+  become_user: "{{ minecraft_user }}"
+
+- name: Accept EULA
+  ansible.builtin.copy:
+    content: "eula={{ minecraft_eula | lower }}\n"
+    dest: "{{ minecraft_dir }}/eula.txt"
+    owner: "{{ minecraft_user }}"
+    group: "{{ minecraft_user }}"
+    mode: "0640"
+
+- name: JVM args
+  ansible.builtin.copy:
+    content: "-Xmx{{ minecraft_xmx }} -Xms{{ minecraft_xms }}\n"
+    dest: "{{ minecraft_dir }}/user_jvm_args.txt"
+    owner: "{{ minecraft_user }}"
+    group: "{{ minecraft_user }}"
+    mode: "0640"
+  notify: Restart minecraft
+
+- name: server.properties
+  ansible.builtin.template:
+    src: server.properties.j2
+    dest: "{{ minecraft_dir }}/server.properties"
+    owner: "{{ minecraft_user }}"
+    group: "{{ minecraft_user }}"
+    mode: "0640"
+  notify: Restart minecraft
+
+- name: systemd unit
+  ansible.builtin.template:
+    src: minecraft.service.j2
+    dest: /etc/systemd/system/minecraft.service
+    mode: "0644"
+  notify:
+    - Reload systemd
+    - Restart minecraft
+
+- name: Enable and start
+  ansible.builtin.systemd:
+    name: minecraft
+    enabled: true
+    state: started
+    daemon_reload: true

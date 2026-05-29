@@ -1,0 +1,16 @@
+[Unit]
+Description=NeoForge Minecraft Server ({{ neoforge_version }})
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User={{ minecraft_user }}
+WorkingDirectory={{ minecraft_dir }}
+ExecStart=/usr/bin/java @user_jvm_args.txt @libraries/net/neoforged/neoforge/{{ neoforge_version }}/unix_args.txt nogui
+Restart=on-failure
+RestartSec=10
+SuccessExitStatus=0 130 143
+
+[Install]
+WantedBy=multi-user.target

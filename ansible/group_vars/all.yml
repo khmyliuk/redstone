@@ -1,0 +1,8 @@
+---
+neoforge_version: "21.1.233"    
+minecraft_user: "minecraft"
+minecraft_dir: "/opt/minecraft"
+minecraft_xmx: "3G"
+minecraft_xms: "3G"
+minecraft_eula: true
+minecraft_port: 25565

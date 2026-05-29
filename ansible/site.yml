@@ -1,0 +1,8 @@
+---
+- name: Provision NeoForge Minecraft server
+  hosts: localhost
+  connection: local
+  become: true
+  roles:
+    - java
+    - minecraft
