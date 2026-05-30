@@ -8,26 +8,26 @@ resource "hcloud_firewall" "my-firewall" {
   }
 
   rule {
-    direction  = "in"
-    protocol   = "tcp"
-    port       = "25565"
-    source_ips = ["0.0.0.0/0", "::/0"]
+    direction   = "in"
+    protocol    = "tcp"
+    port        = tostring(var.mc_port)
+    source_ips  = ["0.0.0.0/0", "::/0"]
     description = "Minecraft java server"
   }
 
   rule {
-    direction  = "in"
-    protocol   = "tcp"
-    port       = "25566"
-    source_ips = ["0.0.0.0/0", "::/0"]
+    direction   = "in"
+    protocol    = "tcp"
+    port        = tostring(var.bluemap_port)
+    source_ips  = ["0.0.0.0/0", "::/0"]
     description = "BlueMap"
   }
 
-    rule {
-    direction  = "in"
-    protocol   = "udp"
-    port       = "25567"
-    source_ips = ["0.0.0.0/0", "::/0"]
+  rule {
+    direction   = "in"
+    protocol    = "udp"
+    port        = tostring(var.vc_port)
+    source_ips  = ["0.0.0.0/0", "::/0"]
     description = "VoiceChat"
   }
 

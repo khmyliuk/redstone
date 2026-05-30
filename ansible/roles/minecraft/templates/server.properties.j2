@@ -1,4 +1,5 @@
 server-port={{ minecraft_port }}
+max-players={{ minecraft_max_players }}
 motd=NeoForge {{ neoforge_version }}
-online-mode=true
-enforce-secure-profile=true
+online-mode={{ minecraft_online_mode | lower }}
+enforce-secure-profile={{ minecraft_online_mode | lower }}

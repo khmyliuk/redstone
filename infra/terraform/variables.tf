@@ -47,7 +47,7 @@ variable "ansible_playbook_path" {
 
 variable "ansible_ref" {
   type        = string
-  default     = "v0.1.1"
+  default     = "v0.1.2"
   description = "Pinned git ref (tag or SHA) for ansible-pull checkout."
 }
 
